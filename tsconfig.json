@@ -14,9 +14,9 @@
     "isolatedModules": true,
     "declaration": true,
     "preserveWatchOutput": true,
-    "jsx": "react",
-    "jsxFactory": "h",
-    "jsxFragmentFactory": ""
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "types": ["vite/client"]
   },
   "include": ["src"],
   "exclude": ["**/tests/**"]

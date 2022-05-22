@@ -1,53 +1,53 @@
-import { createIsland } from '../../dist/index.module'
-import { h } from 'preact'
-import { useState } from 'preact/hooks'
-import { createPortal } from 'preact/compat'
-import style from './call-to-action.island.css'
-import { injectCSS } from './utils'
-import cx from 'clsx'
+import { createIsland } from '../../dist/solid-island.es';
+import { createSignal } from 'solid-js';
+import { Portal } from 'solid-js/web';
+import style from './call-to-action.island.css';
+import { injectCSS } from './utils';
 
-injectCSS(style)
+injectCSS(style);
 
 const Widget = ({ backgroundColor }: { backgroundColor?: string }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = createSignal(false);
 
   return (
     <div>
       <button
-        className="cta_button"
+        class="cta_button"
         style={{ backgroundColor: backgroundColor }}
         onClick={() => setIsOpen(true)}
       >
         All expenses paid island vacation. Click to enter!
       </button>
 
-      {isOpen &&
-        createPortal(
-          <div className={cx('cta__modal', isOpen && 'cta__modal--visible')}>
+      {isOpen() && (
+        <Portal mount={document.body}>
+          <div
+            classList={{ cta__modal: true, 'cta__modal--visible': isOpen() }}
+          >
             <img src="https://github.com/mwood23/preact-island/raw/master/docs/preact-island.svg" />
             <p>Portals work with islands too!</p>
-            <button className="cta_button" onClick={() => setIsOpen(false)}>
+            <button class="cta_button" onClick={() => setIsOpen(false)}>
               close
             </button>
-          </div>,
-          document.body,
-        )}
-      {isOpen &&
-        createPortal(
+          </div>
+        </Portal>
+      )}
+      {isOpen() && (
+        <Portal mount={document.body}>
           <div
-            className={cx(
-              'cta__modal-dimmer',
-              isOpen && 'cta__modal-dimmer--visible',
-            )}
+            classList={{
+              'cta__modal-dimmer': true,
+              'cta__modal-dimmer--visible': isOpen(),
+            }}
             onClick={() => setIsOpen(false)}
-          />,
-          document.body,
-        )}
+          />
+        </Portal>
+      )}
     </div>
-  )
-}
+  );
+};
 
-const island = createIsland(Widget)
+const island = createIsland(Widget);
 island.render({
   selector: '[data-island="call-to-action"]',
-})
+});

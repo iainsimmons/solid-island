@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Solid Island</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 1100px;
+      margin: 50px auto;
+      display: grid;
+      gap: 24px;
+    }
+
+    .code,
+    .preview {
+      border: 1px dashed rgba(0, 0, 0, 0.2);
+      position: relative;
+      padding: 1rem;
+    }
+
+    .code::before {
+      content: 'CODE';
+      position: absolute;
+      display: block;
+      top: -18px;
+      font-size: 11px;
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    .preview::before {
+      content: 'WIDGET PREVIEW';
+      position: absolute;
+      display: block;
+      top: -18px;
+      font-size: 11px;
+      color: rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+
+    <h1>Solid Island</h1>
+
+    <h2>Portals</h2>
+    <pre
+      class="code"><code>&lt;div data-island=&quot;call-to-action&quot; class=&quot;preview&quot;&gt;&lt;/div&gt;</code></pre>
+    <div data-island="call-to-action" class="preview"></div>
+
+    <h2>Props Selector</h2>
+    <pre
+      class="code"><code>&lt;div data-island=&quot;email-subscribe&quot; class=&quot;preview&quot;&gt;&lt;/div&gt;&#10;&lt;script data-island-props=&quot; email-subscribe&quot; type=&quot;text/props&quot;&gt;&#10;  {&#10;    &quot;showName&quot;: true,&#10;    &quot;showEmail&quot;: false&#10;  }&#10;&lt;/script&gt;</code></pre>
+    <div data-island="email-subscribe" class="preview"></div>
+    <script data-island-props="email-subscribe" type="text/props">
+      {
+        "showName": true,
+        "showEmail": false
+      }
+    </script>
+    <h2>Interior Script Props</h2>
+    <pre
+      class="code"><code>&lt;div data-island=&quot;pokemon&quot; class=&quot;preview&quot;&gt;&#10;  &lt;script type=&quot;text/props&quot;&gt;&#10;    { &quot;pokemon&quot;: &quot;1&quot; }&#10;  &lt;/script&gt;&#10;&lt;/div&gt;</code></pre>
+    <div data-island="pokemon" class="preview">
+      <script type="text/props">
+        { "pokemon": "1" }
+      </script>
+    </div>
+    <pre
+      class="code"><code>&lt;div data-island=&quot;pokemon&quot; class=&quot;preview&quot;&gt;&#10;  &lt;script type=&quot;text/props&quot;&gt;&#10;    { &quot;pokemon&quot;: &quot;4&quot; }&#10;  &lt;/script&gt;&#10;&lt;/div&gt;</code></pre>
+    <div data-island="pokemon" class="preview">
+      <script type="text/props">
+        { "pokemon": "4" }
+      </script>
+    </div>
+    <pre
+      class="code"><code>&lt;div data-island=&quot;pokemon&quot; class=&quot;preview&quot;&gt;&#10;  &lt;script type=&quot;text/props&quot;&gt;&#10;    { &quot;pokemon&quot;: &quot;7&quot; }&#10;  &lt;/script&gt;&#10;&lt;/div&gt;</code></pre>
+    <div data-island="pokemon" class="preview">
+      <script type="text/props">
+        { "pokemon": "7" }
+      </script>
+    </div>
+  </div>
+  <script src="/src/index.ts" type="module"></script>
+</body>
+
+</html>

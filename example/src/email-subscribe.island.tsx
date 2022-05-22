@@ -1,57 +1,54 @@
-import { createIsland } from '../../dist/index.module'
-import { Component, h } from 'preact'
-import { useEffect, useState } from 'preact/hooks'
-import { injectCSS } from './utils'
-import style from './email-subscribe.island.css'
+import { createIsland } from '../../dist/solid-island.es';
+import { injectCSS } from './utils';
+import subscriberStore from './subscriber-store';
+import style from './email-subscribe.island.css';
 
-injectCSS(style)
+const [subscriber, setSubscriber] = subscriberStore;
+
+injectCSS(style);
 
 const Widget = ({
   showEmail = true,
   showName = true,
 }: {
-  showEmail: boolean
-  showName: boolean
+  showEmail: boolean;
+  showName: boolean;
 }) => {
-  const [value, setValue] = useState({ name: '', email: '' })
   return (
-    <div className="email__container">
-      <p className="email__title">Join our newsletter</p>
+    <div class="email__container">
+      <p class="email__title">Join our newsletter</p>
       <form
         onSubmit={() => {
-          alert(`Submitted with: ${value.name}, ${value.email}`)
+          alert(`Submitted with: ${subscriber.name}, ${subscriber.email}`);
         }}
       >
         {showName && (
-          <label className="email__input">
+          <label class="email__input">
             Name
             <input
               name="name"
-              onInput={(e: any) =>
-                setValue((x) => ({ ...x, name: e.target.value }))
-              }
+              onInput={(e: any) => setSubscriber({ name: e.target.value })}
             />
           </label>
         )}
 
         {showEmail && (
-          <label className="email__input">
+          <label class="email__input">
             Email
             <input
               name="email"
-              onInput={(e: any) =>
-                setValue((x) => ({ ...x, email: e.target.value }))
-              }
+              onInput={(e: any) => setSubscriber({ email: e.target.value })}
             />
           </label>
         )}
-        <button className="email__submit">Sign up</button>
+        <button class="email__submit">Sign up</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-const island = createIsland(Widget)
+const island = createIsland(Widget);
 island.render({
   selector: '[data-island="email-subscribe"]',
-})
+  propsSelector: '[data-island-props="email-subscribe"]',
+});

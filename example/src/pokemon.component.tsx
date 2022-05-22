@@ -1,52 +1,29 @@
-import { h } from 'preact'
-import { useEffect, useState } from 'preact/hooks'
+import { createResource, Switch, Match } from 'solid-js';
+
+const fetchPokemon = async (pokemon: string) =>
+  (await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)).json();
 
 export const Pokemon = ({ pokemon }: { pokemon: string }) => {
-  const [pokemonData, setPokemonData] = useState<null | any>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-
-  useEffect(() => {
-    if (!pokemon) return
-
-    setLoading(true)
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
-      .then((d) => d.json())
-      .then((d) => {
-        setLoading(false)
-        setPokemonData(d)
-        setError('')
-      })
-      .catch((e) => setError(e.message || 'Something went wrong!'))
-  }, [pokemon])
-
-  if (error) {
-    return <div className="pokemon__container">{error}</div>
-  }
-
-  if (loading) {
-    return <div className="pokemon__container">Loading...</div>
-  }
-
-  if (!pokemonData) {
-    return (
-      <div className="pokemon__container">Select a pokemon to see info</div>
-    )
-  }
-
+  const [pokemonData] = createResource(pokemon, fetchPokemon);
   return (
-    <div className="pokemon__container">
-      <img
-        className="pokemon__image"
-        src={pokemonData.sprites.front_default}
-        alt={pokemonData.name}
-      />
-      <p className="pokemon__info">
-        <b>Name:</b> {pokemonData.name}
-      </p>
-      <p className="pokemon__info">
-        <b>Number:</b> {pokemonData.id}
-      </p>
+    <div class="pokemon__container">
+      <Switch fallback={<>Select a pokemon to see info</>}>
+        <Match when={pokemonData.loading}>Loading...</Match>
+        <Match when={pokemonData.error}>{pokemonData.error}</Match>
+        <Match when={pokemonData()}>
+          <img
+            class="pokemon__image"
+            src={pokemonData()?.sprites?.front_default}
+            alt={pokemonData()?.name}
+          />
+          <p class="pokemon__info">
+            <b>Name:</b> {pokemonData().name}
+          </p>
+          <p class="pokemon__info">
+            <b>Number:</b> {pokemonData().id}
+          </p>
+        </Match>
+      </Switch>
     </div>
-  )
-}
+  );
+};

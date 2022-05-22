@@ -1,25 +1,22 @@
 {
-  "name": "preact-island-examples",
-  "version": "0.1.0",
+  "name": "vite-template-solid",
+  "version": "0.0.0",
   "description": "",
-  "source": "src/index.tsx",
-  "main": "dist/index.js",
-  "module": "dist/index.module.js",
-  "umd:main": "dist/index.umd.js",
   "scripts": {
-    "dev": "preact watch --template src/template.html --no-sw --port 3535",
-    "build": "npm run build:static && npm run build:islands",
-    "build:islands": "NODE_OPTIONS=--max-old-space-size=8192 microbundle src/*.island.tsx build --no-sourcemap --output dist/islands --external none --css inline --tsconfig tsconfig.json",
-    "build:static": "NODE_ENV=production preact build --template src/template.html --no-sw --prerender=false --esm=false --dest=dist"
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
   },
-  "files": [
-    "dist"
-  ],
   "license": "MIT",
   "devDependencies": {
-    "clsx": "^1.1.1",
-    "preact-render-to-string": "^5.1.12",
-    "preact-cli": "^3.3.5",
-    "microbundle": "^0.15.0"
+    "typescript": "^4.6.4",
+    "vite": "^2.9.9",
+    "vite-plugin-solid": "^2.2.6"
+  },
+  "dependencies": {
+    "@babel/core": "^7.0.0-0",
+    "babel-preset-solid": "^1.4.2",
+    "solid-js": "^1.4.2"
   }
 }
